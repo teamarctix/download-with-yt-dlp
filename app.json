@@ -1,0 +1,11 @@
+{
+    "name": "github-heroku-bot",
+    "description": "Telegram Bot using Pyrogram",
+    "repository": "https://github.com/DAXXTEAM/GITHUB-HEROKU",
+    "buildpacks": [
+      {
+        "url": "heroku/python"
+      }
+    ],
+    "stack": "heroku-22"
+  }

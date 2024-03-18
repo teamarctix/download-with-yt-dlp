@@ -8,15 +8,13 @@ def create_screenshot(video_path, output_folder):
         duration = clip.duration
         clip.close()
 
-        # Create screenshots at regular intervals
-        num_screenshots = 10
-        interval = duration / num_screenshots
-
         # Create output folder if it doesn't exist
         os.makedirs(output_folder, exist_ok=True)
 
         # Capture screenshots
-        for i in range(num_screenshots, 0, -1):
+        num_screenshots = 10
+        interval = duration / num_screenshots
+        for i in range(num_screenshots):
             time_point = i * interval
             clip = VideoFileClip(video_path)
             frame = clip.get_frame(time_point)
@@ -29,3 +27,4 @@ def create_screenshot(video_path, output_folder):
         print("Screenshots created successfully!")
     except Exception as e:
         print(f"Error creating screenshots: {e}")
+

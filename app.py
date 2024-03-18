@@ -24,13 +24,26 @@ user_id = 1881720028
 
 # Initialize Telegram client
 app = Client("my_account", bot_token="6732118607:AAEljUlpetKGaxwxb_8nV4VPOgx1BR9pZXU", api_id="11405252", api_hash="b1a1fc3dc52ccc91781f33522255a880")   
+def start_app():
+    if not app.is_initialized:
+        app.start()
 
+def stop_app():
+    if app.is_initialized:
+        app.stop()
+
+def remove_session_files():
+    for file_name in ["session", "session-journal"]:
+        if os.path.exists(file_name):
+            os.remove(file_name)
+            print(f"Removed existing session file: {file_name}")
     
 def main():
-    app.start()   
+    remove_session_files()
+    start_app()
     #video_path = download_video(video_url)
     #print(video_path)
-    video_path = "download\aaaa.mp4"
+    video_path = "download\Puri video bohot mazedaar hone wali hai doston     coming soon…🫶🏻.mp4"
     if video_path:
         print("Checking video size...")
         # Check video size
@@ -67,7 +80,10 @@ def main():
         else:
             print("Error getting video information.")
             return
-         
+        create_screenshot(videos_path, "screenshots/")
+        print("Screenshots created.")
+        print("Thumbnail.path", thumbnail_path )
+
         app.send_video(
             user_id,
             video=videos_path,
@@ -80,19 +96,14 @@ def main():
             progress=progress  # Pass the progress callback function
             )
         print(f'Video "{videos_path}" sent successfully!')
-
-
-        create_screenshot(videos_path, "screenshots/")
-        print("Screenshots created.")
-
-        for screenshot_file in os.listdir("screenshots/"):
-            screenshot_path = os.path.join("screenshots/", screenshot_file)
-            app.send_photo(user_id, photo=screenshot_path, progress=progress)
-            os.remove(screenshot_path)
-            print("Screenshot sent and deleted:", screenshot_file)
-
         
 
-        
+    for screenshot_file in os.listdir("screenshots/"):
+        screenshot_path = os.path.join("screenshots/", screenshot_file)
+        app.send_photo(user_id, photo=screenshot_path, progress=progress)
+        os.remove(screenshot_path)
+        print("Screenshot sent and deleted:", screenshot_file)   
+
+    stop_app()
 if __name__ == "__main__":
     main()
