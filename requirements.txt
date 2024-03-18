@@ -1,5 +1,4 @@
 TgCrypto
-subprocess
 pyrogram
 requests
 moviepy
