@@ -41,9 +41,9 @@ def remove_session_files():
 def main():
     remove_session_files()
     start_app()
-    #video_path = download_video(video_url)
-    #print(video_path)
-    video_path = "download\Puri video bohot mazedaar hone wali hai doston     coming soon…🫶🏻.mp4"
+    video_path = download_video(video_url)
+    print(video_path)
+    #video_path = "download\Puri video bohot mazedaar hone wali hai doston     coming soon…🫶🏻.mp4"
     if video_path:
         print("Checking video size...")
         # Check video size
