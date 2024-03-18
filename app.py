@@ -6,6 +6,7 @@ from PIL import Image
 from pyrogram import Client
 from moviepy.editor import VideoFileClip
 from pyrogram.errors import PeerIdInvalid
+from pyrogram.types import InputMediaPhoto
 
 from modules.download import download_video
 from modules.split import split_video
@@ -23,11 +24,10 @@ api_hash = "b1a1fc3dc52ccc91781f33522255a880"
 user_id = 1881720028
 
 # Initialize Telegram client
-#app = Client("my_account", bot_token="6732118607:AAEljUlpetKGaxwxb_8nV4VPOgx1BR9pZXU", api_id="11405252", api_hash="b1a1fc3dc52ccc91781f33522255a880")   
+#app = Client("my_account", bot_token="6732118607:AAEljUlpetKGaxwxb_8nV4VPOgx1BR9pZXU", api_id="11405252", api_hash="b1a1fc3dc52ccc91781f33522255a880")      
 app = Client("my_account1", bot_token="5552733573:AAFV62EVZ0lHXSzjvf_oztA9ceRlgYSyinY", api_id="28516774", api_hash="0a244f2dcc319a6c0bfa8d4c3e7dbf53")   
 #app = Client("my_account2", bot_token="5539217697:AAHpFmqq7JZbnIVZ7IxwNtnCX1W2sZHS1po", api_id="7571190", api_hash="ccf6815ed978dd194e6031b252a60c4d")   
-#app = Client("my_account3", bot_token="5689409625:AAF7OtfWpgbya7KopUqQMIf29Zllvt_zmjU", api_id="5360874", api_hash="4631f40a1b26c2759bf1be4aff1df710")   
-
+#app = Client("my_account3", bot_token="5689409625:AAF7OtfWpgbya7KopUqQMIf29Zllvt_zmjU", api_id="5360874", api_hash="4631f40a1b26c2759bf1be4aff1df710")
 def start_app():
     if not app.is_initialized:
         app.start()
@@ -47,7 +47,6 @@ def main():
     start_app()
     video_path = download_video(video_url)
     print(video_path)
-    #video_path = "download\Puri video bohot mazedaar hone wali hai doston     coming soon…🫶🏻.mp4"
     if video_path:
         print("Checking video size...")
         # Check video size
@@ -101,12 +100,17 @@ def main():
             )
         print(f'Video "{videos_path}" sent successfully!')
         
-
+    media_group = []
     for screenshot_file in os.listdir("screenshots/"):
         screenshot_path = os.path.join("screenshots/", screenshot_file)
-        app.send_photo(user_id, photo=screenshot_path, progress=progress)
+        media_group.append(InputMediaPhoto(media=screenshot_path))
+
+    app.send_media_group(chat_id=user_id, media=media_group)    
+        #app.send_photo(user_id, photo=screenshot_path, progress=progress)
+    for screenshot_file in os.listdir("screenshots/"):
+        screenshot_path = os.path.join("screenshots/", screenshot_file)
         os.remove(screenshot_path)
-        print("Screenshot sent and deleted:", screenshot_file)   
+        print("Screenshot deleted:", screenshot_file)
 
     stop_app()
 if __name__ == "__main__":
