@@ -5,6 +5,7 @@ import os
 import re
 
 def download_thumbnail(video_id, video_path, thumbnail_path):
+    thumbnail_path = os.path.join(os.path.dirname(video_path), 'thumbnail.jpg')
     # Try downloading thumbnail directly from YouTube
     thumbnail_url = f"https://img.youtube.com/vi/{video_id}/maxresdefault.jpg"
     response = requests.get(thumbnail_url)

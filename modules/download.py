@@ -13,6 +13,9 @@ def download_video(url):
     # Execute the command
     try:
         subprocess.run(command, check=True)
-        print("Video downloaded successfully!")
+        video_title = subprocess.check_output(['yt-dlp', '--get-filename', '-o', '%(title)s', url], universal_newlines=True).strip()
+        video_path = os.path.join('download', f"{video_title}.mp4")        
+        return video_path
     except subprocess.CalledProcessError as e:
         print(f"Error downloading video: {e}")
+        return None

@@ -13,7 +13,6 @@ from modules.dw_thumb import extract_video_id, download_thumbnail
 from modules.video_info import get_video_info
 from modules.sendtelegram import send_telegram_video, send_telegram_screenshot
 from modules.progress import progress
-from modules.screenshort import create_screenshot
 
 video_url = os.getenv("VIDEO_URL", "https://youtube.com/shorts/20Kl2Az6yXA?si=3BNAXO3VJFo2N1DR")   
 download_folder = "download"   
@@ -28,9 +27,8 @@ app = Client("my_account", bot_token="6732118607:AAEljUlpetKGaxwxb_8nV4VPOgx1BR9
     
 def main():
     app.start()   
-    #video_path = download_video(video_url)
-    #print(video_path)
-    video_path = "download\aaaa.mp4"
+    video_path = download_video(video_url)
+    #video_path = "download\Over smart kid in building pt 2 #khushaalpawaar #acting #kids #comedyshorts #richkids.mp4"
     if video_path:
         print("Checking video size...")
         # Check video size
@@ -68,28 +66,17 @@ def main():
             print("Error getting video information.")
             return
          
-        app.send_video(
+        send_telegram_video(
             user_id,
-            video=videos_path,
-            caption=video_filename,
-            duration=int(duration),
-            width=width,
-            height=height,
-            thumb=thumbnail_path,
+            video_path,
+            thumbnail_path,
+            video_filename,
+            duration,
+            width,
+            height,
             supports_streaming=True,
-            progress=progress  # Pass the progress callback function
-            )
-        print(f'Video "{videos_path}" sent successfully!')
-
-
-        create_screenshot(videos_path, "screenshots/")
-        print("Screenshots created.")
-
-        for screenshot_file in os.listdir("screenshots/"):
-            screenshot_path = os.path.join("screenshots/", screenshot_file)
-            app.send_photo(user_id, photo=screenshot_path, progress=progress)
-            os.remove(screenshot_path)
-            print("Screenshot sent and deleted:", screenshot_file)
+            progress=progress
+        )
 
         
 
