@@ -5,7 +5,7 @@ def download_video(url):
     output_format = 'download/%(title)s.%(ext)s'
     command = [
         'yt-dlp',
-        '-f', 'best',
+        '-f', 'bestvideo[ext=mp4]+bestaudio[ext=m4a]/best',
         '-o', output_format,
         url
     ]
