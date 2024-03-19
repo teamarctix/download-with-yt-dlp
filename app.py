@@ -107,18 +107,24 @@ def main():
             )
         print(f'Video "{videos_path}" sent successfully!')
         
-    media_group = []
-    for screenshot_file in os.listdir("screenshots/"):
-        screenshot_path = os.path.join("screenshots/", screenshot_file)
-        media_group.append(InputMediaPhoto(media=screenshot_path))
+    #media_group = []
+    #for screenshot_file in os.listdir("screenshots/"):
+     #   screenshot_path = os.path.join("screenshots/", screenshot_file)
+       # media_group.append(InputMediaPhoto(media=screenshot_path))
 
-    app.send_media_group(chat_id=user_id, media=media_group)    
+   # app.send_media_group(chat_id=user_id, media=media_group)    
         #app.send_photo(user_id, photo=screenshot_path, progress=progress)
+    #for screenshot_file in os.listdir("screenshots/"):
+    #    screenshot_path = os.path.join("screenshots/", screenshot_file)
+    #    os.remove(screenshot_path)
+    #    print("Screenshot deleted:", screenshot_file)
+        
     for screenshot_file in os.listdir("screenshots/"):
         screenshot_path = os.path.join("screenshots/", screenshot_file)
+        app.send_photo(user_id, photo=screenshot_path, progress=progress)
         os.remove(screenshot_path)
-        print("Screenshot deleted:", screenshot_file)
-
+        print("Screenshot sent and deleted:", screenshot_file)   
+        
     stop_app()
 if __name__ == "__main__":
     main()
