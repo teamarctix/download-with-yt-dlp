@@ -43,15 +43,14 @@ def remove_session_files():
             os.remove(file_name)
             print(f"Removed existing session file: {file_name}")
 keyboard = [
-    [InlineKeyboardButton("Data", callback_data="callback_data")],
-    [InlineKeyboardButton("Docs", url="https://docs.pyrogram.org")]
+    [InlineKeyboardButton("Docs", url=video_url)]
 ]
 
 def main():
     remove_session_files()
     start_app()
     reply_markup = InlineKeyboardMarkup(keyboard)
-    message = f"Here is the video you requested: {video_url}"
+    message = "Your Download Started"
     app.send_message(user_id, message, reply_markup=reply_markup)    
     video_path = download_video(video_url)
     print(video_path)
