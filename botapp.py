@@ -25,6 +25,20 @@ def process_video_url(_, update):
     update.reply_text("Your download has started.")
     
     video_path = download_video(video_url)
+    if video_path:
+        print("Checking video size...")
+        # Check video size
+        video_size_mb = os.path.getsize(video_path) / (1024 * 1024)  # Convert bytes to MB
+        if video_size_mb <= 2000:
+            print("Video is under 2GB So , Next step Proceed")
+        else:
+            print("Video size is more than 2000MB. Splitting the video...")
+            split_video(video_path)
+            print("Video split successfully. Removing original video...")
+            os.remove(video_path)
+            print("Original video removed.")
+    else:
+        print("Failed to download the video.")
     
     if video_path:
         video_files = [file for file in os.listdir(download_folder) if file.endswith(".mp4")]
