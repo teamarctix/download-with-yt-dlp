@@ -75,8 +75,8 @@ def process_video_url(_, update):
                         if os.path.exists(screenshot_path):  # Check if the screenshot file exists
                             app.send_photo(update.chat.id, photo=screenshot_path)
                             os.remove(screenshot_path)
-                            os.remove(videos_path)
-        
+                            
+        os.remove(videos_path)     
         update.reply_text("Video and screenshots sent successfully.")
     else:
         update.reply_text("Failed to download the video.")
