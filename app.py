@@ -26,8 +26,8 @@ user_id = 1881720028
 
 # Initialize Telegram client
 #app = Client("my_account", bot_token="6732118607:AAEljUlpetKGaxwxb_8nV4VPOgx1BR9pZXU", api_id="11405252", api_hash="b1a1fc3dc52ccc91781f33522255a880")      
-app = Client("my_account1", bot_token="5552733573:AAFV62EVZ0lHXSzjvf_oztA9ceRlgYSyinY", api_id="28516774", api_hash="0a244f2dcc319a6c0bfa8d4c3e7dbf53")   
-#app = Client("my_account2", bot_token="5539217697:AAHpFmqq7JZbnIVZ7IxwNtnCX1W2sZHS1po", api_id="7571190", api_hash="ccf6815ed978dd194e6031b252a60c4d")   
+#app = Client("my_account1", bot_token="5552733573:AAFV62EVZ0lHXSzjvf_oztA9ceRlgYSyinY", api_id="28516774", api_hash="0a244f2dcc319a6c0bfa8d4c3e7dbf53")   
+app = Client("my_account2", bot_token="5539217697:AAHpFmqq7JZbnIVZ7IxwNtnCX1W2sZHS1po", api_id="7571190", api_hash="ccf6815ed978dd194e6031b252a60c4d")   
 #app = Client("my_account3", bot_token="5689409625:AAF7OtfWpgbya7KopUqQMIf29Zllvt_zmjU", api_id="5360874", api_hash="4631f40a1b26c2759bf1be4aff1df710")
 def start_app():
     if not app.is_initialized:
