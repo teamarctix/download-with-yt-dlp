@@ -7,7 +7,7 @@ from pyrogram import Client
 from moviepy.editor import VideoFileClip
 from pyrogram.errors import PeerIdInvalid
 from pyrogram.types import InputMediaPhoto
-from pyrogram import InlineKeyboardButton, InlineKeyboardMarkup
+from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup
 
 from modules.download import download_video
 from modules.split import split_video
