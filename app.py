@@ -48,6 +48,7 @@ keyboard = [
 
 def main():
     remove_session_files()
+    os.makedirs(download_folder, exist_ok=True)
     start_app()
     reply_markup = InlineKeyboardMarkup(keyboard)
     message = "Your Download Started"
