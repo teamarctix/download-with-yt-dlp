@@ -7,9 +7,27 @@ from modules.video_info import get_video_info
 from modules.screenshort import create_screenshot
 
 app = Client("my_account3", bot_token="5689409625:AAF7OtfWpgbya7KopUqQMIf29Zllvt_zmjU", api_id="5360874", api_hash="4631f40a1b26c2759bf1be4aff1df710")
-#app = Client("my_account", bot_token="YOUR_BOT_TOKEN", api_id="YOUR_API_ID", api_hash="YOUR_API_HASH")
 download_folder = "download"
 screenshot_directory = "screenshots"
+
+def send_video_progress(chat_id, video_path, video_filename, duration, width, height, thumbnail_path):
+    message = app.send_message(chat_id, "Uploading video... 0.00%")
+    
+    def progress_callback(current, total):
+        percentage = (current / total) * 100
+        app.edit_message_text(chat_id, message.message_id, f"Uploading video... {percentage:.2f}%")
+    
+    app.send_video(
+        chat_id,
+        video=video_path,
+        caption=video_filename,
+        duration=int(duration),
+        width=width,
+        height=height,
+        thumb=thumbnail_path,
+        progress=progress_callback,
+        supports_streaming=True
+    )
 
 @app.on_message(filters.command(["start"]))
 def start(_, update):
@@ -27,10 +45,9 @@ def process_video_url(_, update):
     video_path = download_video(video_url)
     if video_path:
         print("Checking video size...")
-        # Check video size
         video_size_mb = os.path.getsize(video_path) / (1024 * 1024)  # Convert bytes to MB
         if video_size_mb <= 2000:
-            print("Video is under 2GB So , Next step Proceed")
+            print("Video is under 2GB. Proceeding to the next step.")
         else:
             print("Video size is more than 2000MB. Splitting the video...")
             split_video(video_path)
@@ -57,15 +74,14 @@ def process_video_url(_, update):
                 if duration is not None and width is not None and height is not None:
                     create_screenshot(videos_path, screenshot_directory)
                     
-                    app.send_video(
+                    send_video_progress(
                         update.chat.id,
-                        video=videos_path,
-                        caption=video_filename,
-                        duration=int(duration),
-                        width=width,
-                        height=height,
-                        thumb=thumbnail_path,
-                        supports_streaming=True
+                        videos_path,
+                        video_filename,
+                        duration,
+                        width,
+                        height,
+                        thumbnail_path
                     )
                     
                     for i in range(10):  # Iterate from 0 to 9
@@ -82,4 +98,4 @@ def process_video_url(_, update):
         update.reply_text("Failed to download the video.")
 
 app.run()
-  
+    
