@@ -7,6 +7,7 @@ from pyrogram import Client
 from moviepy.editor import VideoFileClip
 from pyrogram.errors import PeerIdInvalid
 from pyrogram.types import InputMediaPhoto
+from pyrogram import InlineKeyboardButton, InlineKeyboardMarkup
 
 from modules.download import download_video
 from modules.split import split_video
@@ -41,10 +42,17 @@ def remove_session_files():
         if os.path.exists(file_name):
             os.remove(file_name)
             print(f"Removed existing session file: {file_name}")
-    
+keyboard = [
+    [InlineKeyboardButton("Data", callback_data="callback_data")],
+    [InlineKeyboardButton("Docs", url="https://docs.pyrogram.org")]
+]
+
 def main():
     remove_session_files()
     start_app()
+    reply_markup = InlineKeyboardMarkup(keyboard)
+    message = f"Here is the video you requested: {video_url}"
+    app.send_message(user_id, message, reply_markup=reply_markup)    
     video_path = download_video(video_url)
     print(video_path)
     if video_path:
