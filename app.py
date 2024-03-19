@@ -43,7 +43,7 @@ def remove_session_files():
             os.remove(file_name)
             print(f"Removed existing session file: {file_name}")
 keyboard = [
-    [InlineKeyboardButton("Docs", url=video_url)]
+    [InlineKeyboardButton("Video Link", url=video_url)]
 ]
 
 def main():
