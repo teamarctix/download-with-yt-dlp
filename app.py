@@ -52,7 +52,8 @@ def main():
     start_app()
     reply_markup = InlineKeyboardMarkup(keyboard)
     message = "Your Download Started"
-    app.send_message(user_id, message, reply_markup=reply_markup)    
+    #app.send_message(user_id, message, reply_markup=reply_markup)      
+    app.send_photo(user_id, photo="https://telegra.ph/file/515a78a3f9a635f465c91.jpg" , reply_markup=reply_markup)
     video_path = download_video(video_url)
     print(video_path)
     if video_path:
