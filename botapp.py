@@ -40,6 +40,8 @@ def process_video_url(_, update):
             print("Original video removed.")
     else:
         print("Failed to download the video.")
+        
+    update.reply_text("Video Uploading....")
     
     if video_path:
         video_files = [file for file in os.listdir(download_folder) if file.endswith(".mp4")]
