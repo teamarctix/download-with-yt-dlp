@@ -1,5 +1,6 @@
 import os
 from pyrogram import Client, filters
+from modules.progress import progress
 from modules.download import download_video
 from modules.split import split_video
 from modules.dw_thumb import extract_video_id, download_thumbnail
@@ -65,7 +66,8 @@ def process_video_url(_, update):
                         width=width,
                         height=height,
                         thumb=thumbnail_path,
-                        supports_streaming=True
+                        supports_streaming=True,
+                        progress=progress
                     )
                     
                     for i in range(10):  # Iterate from 0 to 9
@@ -73,7 +75,7 @@ def process_video_url(_, update):
                         screenshot_path = os.path.join(screenshot_directory, screenshot_file)
 
                         if os.path.exists(screenshot_path):  # Check if the screenshot file exists
-                            app.send_photo(update.chat.id, photo=screenshot_path)
+                            app.send_photo(update.chat.id, photo=screenshot_path, progress=progress)
                             os.remove(screenshot_path)
                             
         os.remove(videos_path)     
