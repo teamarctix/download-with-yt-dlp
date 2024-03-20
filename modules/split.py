@@ -14,22 +14,25 @@ def split_video(input_video, first_chunk_size_mb=2088):
 
     # Split the video into chunks
     input_filename, input_extension = os.path.splitext(input_video)
+    start_time = 0
     for i in range(num_full_chunks):
         output_file = f"{input_filename}_part_{i + 1:03d}{input_extension}"
         split_cmd = [
-            "ffmpeg", "-i", input_video, "-fs", f"{first_chunk_size_mb}M",
+            "ffmpeg", "-i", input_video, "-ss", str(start_time), "-fs", f"{first_chunk_size_mb}M",
             "-c:v", "copy", "-c:a", "copy", output_file
         ]
         subprocess.run(split_cmd)
         print(f"Chunk {i + 1}/{num_full_chunks} created.")
+        start_time += first_chunk_size_mb
 
     if num_remaining_chunks > 0:
         output_file = f"{input_filename}_part_{num_full_chunks + 1:03d}{input_extension}"
         split_cmd = [
-            "ffmpeg", "-i", input_video, "-fs", f"{remaining_chunk_size_mb}M",
+            "ffmpeg", "-i", input_video, "-ss", str(start_time), "-fs", f"{remaining_chunk_size_mb}M",
             "-c:v", "copy", "-c:a", "copy", output_file
         ]
         subprocess.run(split_cmd)
         print(f"Chunk {num_full_chunks + 1}/{num_full_chunks + 1} created.")
 
     print("Video splitting completed.")
+
