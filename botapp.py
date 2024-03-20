@@ -56,7 +56,9 @@ def process_video_url(_, update):
                 duration, width, height = get_video_info(videos_path)
                 
                 if duration is not None and width is not None and height is not None:
+                    update.reply_text("Screenshot creation has started.....")
                     create_screenshot(videos_path, screenshot_directory)
+                    update.reply_text("Video Uploading....")
                     
                     app.send_video(
                         update.chat.id,
