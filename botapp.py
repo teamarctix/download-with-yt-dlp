@@ -58,6 +58,8 @@ def process_video_url(_, update):
                 if duration is not None and width is not None and height is not None:
                     update.reply_text("Screenshot creation has started.....")
                     create_screenshot(videos_path, screenshot_directory)
+                    update.reply_text("Screenshot Cretae Sucessfully....")
+                    
                     update.reply_text("Video Uploading....")
                     
                     app.send_video(
@@ -71,7 +73,7 @@ def process_video_url(_, update):
                         supports_streaming=True,
                         progress=progress
                     )
-                    
+                    update.reply_text("Video uploaded")
                     for i in range(10):  # Iterate from 0 to 9
                         screenshot_file = f"screenshot_{i}.jpg"
                         screenshot_path = os.path.join(screenshot_directory, screenshot_file)
