@@ -8,7 +8,7 @@ from modules.video_info import get_video_info
 from modules.screenshort import create_screenshot
 
 app = Client("my_account3", bot_token="5689409625:AAF7OtfWpgbya7KopUqQMIf29Zllvt_zmjU", api_id="5360874", api_hash="4631f40a1b26c2759bf1be4aff1df710")
-#app = Client("my_account", bot_token="YOUR_BOT_TOKEN", api_id="YOUR_API_ID", api_hash="YOUR_API_HASH")
+#app = Client("my_account3", bot_token="YOUR_BOT_TOKEN", api_id="YOUR_API_ID", api_hash="YOUR_API_HASH")
 download_folder = "download"
 screenshot_directory = "screenshots"
 
@@ -26,26 +26,20 @@ def process_video_url(_, update):
     update.reply_text("Your download has started.")
     
     video_path = download_video(video_url)
-    update.reply_text("Your download was completed")   
     
     if video_path:
         print("Checking video size...")
         # Check video size
         video_size_mb = os.path.getsize(video_path) / (1024 * 1024)  # Convert bytes to MB
-        if video_size_mb <= 2000:
-            print("Video is under 2GB So , Next step Proceed")
-        else:
+        if video_size_mb > 2000:
             print("Video size is more than 2000MB. Splitting the video...")
             split_video(video_path)
             print("Video split successfully. Removing original video...")
             os.remove(video_path)
             print("Original video removed.")
-    else:
-        print("Failed to download the video.")
         
-    update.reply_text("Video Uploading....")
-    
-    if video_path:
+        update.reply_text("Your download was completed")  
+        
         video_files = [file for file in os.listdir(download_folder) if file.endswith(".mp4")]
         video_files.sort()
         
@@ -62,9 +56,7 @@ def process_video_url(_, update):
                 if duration is not None and width is not None and height is not None:
                     update.reply_text("Screenshot creation has started.....")
                     create_screenshot(videos_path, screenshot_directory)
-                    update.reply_text("Screenshot Create Sucessfully....")
-                    
-                    update.reply_text("Video Uploading....")
+                    update.reply_text("Screenshot Created Successfully....")
                     
                     app.send_video(
                         update.chat.id,
@@ -77,7 +69,7 @@ def process_video_url(_, update):
                         supports_streaming=True,
                         progress=progress
                     )
-                    update.reply_text("Video uploaded")
+                    
                     for i in range(10):  # Iterate from 0 to 9
                         screenshot_file = f"screenshot_{i}.jpg"
                         screenshot_path = os.path.join(screenshot_directory, screenshot_file)
@@ -86,10 +78,13 @@ def process_video_url(_, update):
                             app.send_photo(update.chat.id, photo=screenshot_path, progress=progress)
                             os.remove(screenshot_path)
                             
-        os.remove(videos_path)     
-        update.reply_text("Video and screenshots sent successfully.")
+                    os.remove(videos_path)     
+                    update.reply_text("Video and screenshots sent successfully.")
+                else:
+                    update.reply_text("Failed to get video information.")
+            else:
+                update.reply_text("Failed to download the video thumbnail.")
     else:
         update.reply_text("Failed to download the video.")
 
 app.run()
-  
