@@ -7,6 +7,8 @@ def download_video(url):
         'yt-dlp',
         '-f', 'bestvideo[ext=mp4]+bestaudio[ext=m4a]/best',
         '-o', output_format,
+        '--external-downloader', 'aria2c',  # Specify aria2c as the external downloader
+        '--external-downloader-args', '-x 16',  # Add arguments for aria2c (optional)
         url
     ]
     
