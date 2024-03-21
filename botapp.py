@@ -26,6 +26,8 @@ def process_video_url(_, update):
     update.reply_text("Your download has started.")
     
     video_path = download_video(video_url)
+    update.reply_text("Your download was completed")   
+    
     if video_path:
         print("Checking video size...")
         # Check video size
@@ -60,7 +62,7 @@ def process_video_url(_, update):
                 if duration is not None and width is not None and height is not None:
                     update.reply_text("Screenshot creation has started.....")
                     create_screenshot(videos_path, screenshot_directory)
-                    update.reply_text("Screenshot Cretae Sucessfully....")
+                    update.reply_text("Screenshot Create Sucessfully....")
                     
                     update.reply_text("Video Uploading....")
                     
